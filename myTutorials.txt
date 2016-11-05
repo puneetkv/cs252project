@@ -1,0 +1,57 @@
+[
+    {
+        "userid": "0",
+        "friends": "",
+        "requests": ""
+    },
+    {
+        "userid": "1",
+        "friends": "",
+        "requests": ""
+    },
+    {
+        "userid": "2",
+        "friends": "",
+        "requests": ""
+    },
+    {
+        "userid": "3",
+        "friends": "",
+        "requests": ""
+    },
+    {
+        "userid": "4",
+        "friends": "",
+        "requests": ""
+    },
+    {
+        "userid": "5",
+        "friends": "8",
+        "requests": ""
+    },
+    {
+        "userid": "6",
+        "friends": "",
+        "requests": ""
+    },
+    {
+        "userid": "7",
+        "friends": "",
+        "requests": ""
+    },
+    {
+        "userid": "8",
+        "friends": "5",
+        "requests": "3,5,6"
+    },
+    {
+        "userid": 9,
+        "friends": "",
+        "requests": ""
+    },
+    {
+        "userid": 10,
+        "friends": "",
+        "requests": ""
+    }
+]

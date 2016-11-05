@@ -1,0 +1,12 @@
+<?php
+$json_data = file_get_contents('myTutorials.txt');
+$data = json_decode($json_data);
+
+echo $data[0]->url;
+$friends=explode(",",$data[0]->url);
+echo 15*$friends[0];
+$w=15;
+$data[0]->url = $data[0]->url.",".$w;
+echo $data[0]->url;
+echo 
+?>

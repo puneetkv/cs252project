@@ -1,0 +1,30 @@
+<?php 
+$userid = $_POST['userid'];
+$friend = $_POST['friend'];
+$json_data = file_get_contents('myTutorials.txt');
+$data = json_decode($json_data);
+echo $json_data;
+echo $data[$userid]->requests;
+$friends=explode(",",$data[$userid]->requests);
+echo $friends[$userid];
+
+if($data[$userid]->requests != null)
+{
+$data[$userid]->requests = $data[$userid]->requests.",".$friend;
+}
+else{
+$data[$userid]->requests = $data[$userid]->requests.$friend;}
+echo $data[$userid]->requests;
+$json_data= json_encode($data);
+echo $json_data;
+$check=explode(",",$data[$friend]->requests);
+$flag=1;
+foreach($check as $i){
+if($i/==$userid)
+{$flag=0;}
+}
+if($flag)
+{
+echo file_put_contents('myTutorials.txt',$json_data);
+}
+?>
