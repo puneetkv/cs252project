@@ -26,6 +26,10 @@
   $pass = trim($_POST['pass']);
   $pass = strip_tags($pass);
   $pass = htmlspecialchars($pass);
+
+  $phone = trim($_POST['phone']);
+  $phone = strip_tags($phone);
+  $phone = htmlspecialchars($phone);
   
   // basic name validation
   if (empty($name)) {
@@ -33,7 +37,7 @@
    $nameError = "Please enter your full name.";
   } else if (strlen($name) < 3) {
    $error = true;
-   $nameError = "Name must have atleat 3 characters.";
+   $nameError = "Name must have atleast 3 characters.";
   } else if (!preg_match("/^[a-zA-Z ]+$/",$name)) {
    $error = true;
    $nameError = "Name must contain alphabets and space.";
@@ -73,10 +77,21 @@
   // password encrypt using SHA256();
   $password = hash('sha256', $pass);
   
+
+if (empty($phone)) {
+   $error = true;
+   $phoneError = "Please enter a valid phone number";
+  } else if (strlen($phone) != 10) {
+   $error = true;
+   $phoneError = "Number must have 10 characters.";
+  } else if (preg_match("/^[a-zA-Z ]+$/",$phone)) {
+   $error = true;
+   $phoneError = "Only digits allowed!";
+  }
   // if there's no error, continue to signup
   if( !$error ) {
    
-   $query = "INSERT INTO users(userName,userEmail,userPass,gender) VALUES('$name','$email','$password','$gender')";
+   $query = "INSERT INTO users(userName,userEmail,userPass,gender,image) VALUES('$name','$email','$password','$gender','as.jpg')";
    $res = mysql_query($query);
     
    if ($res) {
@@ -96,6 +111,7 @@ file_put_contents('myTutorials.txt',$json_data);
     unset($gender);
     unset($email);
     unset($pass);
+	unset($phone);
 	
     
    } else {
@@ -168,6 +184,14 @@ file_put_contents('myTutorials.txt',$json_data);
              <input type="email" name="email" class="form-control" placeholder="Enter Your Email" maxlength="40" value="<?php echo $email ?>" />
                 </div>
                 <span class="text-danger"><?php echo $emailError; ?></span>
+            </div>
+
+ <div class="form-group">
+             <div class="input-group">
+                <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span>
+             <input type="int" name="phone" class="form-control" placeholder="Enter Your Number" maxlength="10" value="<?php echo $phone ?>" />
+                </div>
+                <span class="text-danger"><?php echo $phoneError; ?></span>
             </div>
             
             <div class="form-group">

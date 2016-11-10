@@ -16,7 +16,6 @@ if($i==$friend)
 }
 if($flag1)
 {
-
 $check=explode(",",$data[$friend]->requests);
 $flag=1;
 foreach($check as $i){
@@ -31,7 +30,6 @@ $data[$userid]->requests = $data[$userid]->requests.",".$friend;
 }
 else{
 $data[$userid]->requests = $data[$userid]->requests.$friend;}
-
 $json_data= json_encode($data,JSON_PRETTY_PRINT);
 file_put_contents('myTutorials.txt',$json_data);
 }
@@ -41,7 +39,6 @@ if($data[$userid]->friends != null)
 {
 $data[$userid]->friends = $data[$userid]->friends.",".$friend;
 $data[$friend]->friends = $data[$friend]->friends.",".$userid;
-
 }
 else{
 $data[$userid]->friends = $data[$userid]->friends.$friend;
@@ -52,6 +49,6 @@ file_put_contents('myTutorials.txt',$json_data);
 }
 }
 echo $json_data;
-// header("Location: home.php");
+header("Location: home.php");
 ?>
- 
+

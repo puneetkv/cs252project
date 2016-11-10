@@ -41,16 +41,21 @@
     },
     {
         "userid": "8",
-        "friends": "5",
-        "requests": "3,5,6"
+        "friends": "5,9,10",
+        "requests": "3,5,7"
     },
     {
         "userid": 9,
-        "friends": "",
-        "requests": ""
+        "friends": "10,8",
+        "requests": "8"
     },
     {
         "userid": 10,
+        "friends": "9,8",
+        "requests": "8,9"
+    },
+    {
+        "userid": 11,
         "friends": "",
         "requests": ""
     }

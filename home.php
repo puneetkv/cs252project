@@ -20,7 +20,7 @@ if (empty($gndr)) {
   }
 
 if( !$error ) {
-	$query = "SELECT userName,userId FROM `users` WHERE gender='$gndr'";
+	$query = "SELECT userName,userId,image,aboutMe FROM `users` WHERE gender='$gndr'";
 	//$frnd=mysql_fetch_array($query);
 
 
@@ -28,13 +28,16 @@ if ($result = mysql_query($query)) {
 	
 	$store_name_array= array();
 	$store_id_array= array();
+	$store_image_array= array();
+	$store_aboutme_array= array();
     /* fetch associative array */
 
     while ($row = mysql_fetch_assoc($result)) {
       //  printf ("%s (%s)\n", $row["userName"], $row["userId"]);
 	array_push($store_name_array,$row["userName"]);
 	array_push($store_id_array,$row["userId"]);
-	
+	array_push($store_image_array,$row["image"]);
+	array_push($store_aboutme_array,$row["aboutMe"]);
     }
 	
 	
@@ -72,12 +75,42 @@ if ($result = mysql_query($query)) {
             <li class="dropdown">
               <a  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
      <span class="glyphicon glyphicon-user"></span>&nbsp; Welcome to this site <?php echo $userRow['userName']; ?>&nbsp;<span class="caret"></span></a>
+
+
               <ul class="dropdown-menu">
                 <li><a href="logout.php?logout"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Sign Out</a></li>
               </ul>
             </li>
           </ul>
         </div>
+
+<img src="documents/<?php echo $userRow['image'];?>"  width="175" height="200" />
+
+<!--upload image-->
+<div></div>
+
+<form action="upload.php" method="post" enctype="multipart/form-data">
+     <input type="file" name="fileToUpload" id="fileToUpload">
+    <input type="submit" value="Upload Image" name="submit">
+</form>
+
+
+<div id="navbar" class="navbar-collapse collapse">
+       
+          <ul class="nav navbar-nav navbar-right">
+            
+            <li class="dropdown">
+              <a  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+     <span class="glyphicon glyphicon-user"></span>&nbsp; About me: <?php echo $userRow['aboutMe']; ?>&nbsp;<span class="caret"></span></a>
+
+
+
+<form action="aboutme.php" method="post" enctype="multipart/form-data">
+     <input type="text" name="fileToUpload" id="fileToUpload">
+    <input type="submit" value="Edit" name="submit">
+</form>
+
+
 
 <div>
 <h2>People</h2>
@@ -91,39 +124,59 @@ if ($result = mysql_query($query)) {
                </div>
 		</div>
 <div class="form-group">
-             <button type="submit" class="btn btn-block btn-primary" name="btn-gender">Click here</button>
+             <button type="submit" class="btn btn-block btn-primary" name="btn-gender">Find</button>
             </div></form>
-<?php
-for( $i=0 ; $i< count($store_name_array);$i++){
 
-echo "<button>$store_id_array[$i]</button>";
+<?php echo "<br>"."<br>"; ?>
+<?php
+echo "<table>";
+for( $i=0 ; $i< count($store_name_array);$i++){
+echo "<tr>";
+?>
+<img src="documents/<?php echo $store_image_array[$i];?>"  width="40" height="40" />
+<?php
+echo $store_name_array[$i];
+echo "<br>";
+echo "Bio:".$store_aboutme_array[$i];
+echo "<br>";
 echo '
 <form  method="post" action="test.php">
  <input type="hidden" name="userid" value="'.$userRow['userId'].'"/>
  <input type="hidden" name="friend" value="'.$store_id_array[$i].'"/> 
-<input type="submit" value="submit"/>
+<input type="submit" value="Like"/>
 </form>';
-
-echo $store_name_array[$i];
 echo "<br>";
+?>
+
+
+<?php
+echo "<br>";
+echo "</tr>";
 }
+echo "</table>";
 ?>
 </div>
 <div>
-<h2>Friends</h2>
+
+<h2>Match</h2>
 <?php
 $json_data = file_get_contents('myTutorials.txt');
 $data = json_decode($json_data);
-$friends=explode(",",$data[$userRow['userId']]->requests);
+$friends=explode(",",$data[$userRow['userId']]->friends);
 $n = count($friends);
-
+echo "Match"." ".$n;
+echo "<br>";
+echo "<table>";
 for($i=0;$i< $n;$i++)
 {
 	
 $res1=mysql_query("SELECT * FROM users WHERE userId=".$friends[$i]);
  $userRow1=mysql_fetch_array($res1);
-echo $userRow1['userName']."<br>";
+echo $userRow1['userName']." ";
+echo $userRow1['phone'];
+echo "<br>";
 }
+echo "</table>";
 
 ?>
 </div>
